@@ -1,10 +1,517 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>San Iago del Mármol y el Vínculo</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23d1ae6c%22 /></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --gold-light: #d1ae6c;
+            --gold-dark: #b98728;
+            --text-light: #ffffff;
+            --text-dark: #1a1a1a;
+            --bg-overlay: rgba(0, 0, 0, 0.85);
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(209, 174, 108, 0.1) 0%, transparent 60%),
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNkMWFlNmMiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+');
+        }
+
+        /* Typography */
+        body {
+            font-size: 1.1rem;
+            /* Base size increase */
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gold-light);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        /* Larger H1 */
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        /* Larger H2 */
+        h3 {
+            font-size: 1.6rem;
+        }
+
+        /* Larger H3 */
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--bg-overlay);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+        }
+
+        .overlay-content {
+            text-align: center;
+            border: 2px solid var(--gold-light);
+            padding: 3rem;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #enter-btn {
+            background: transparent;
+            border: 1px solid var(--gold-light);
+            color: var(--gold-light);
+            padding: 1rem 2rem;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        #enter-btn:hover {
+            background: var(--gold-light);
+            color: var(--text-dark);
+        }
+
+        /* Main Content */
+        .hidden {
+            display: none;
+            /* Changed to display none to prevent scrollbar issues before load */
+        }
+
+        .fade-in {
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .saint-image-container {
+            width: 100%;
+            max-width: 500px;
+            /* Increased max width */
+            border: 3px solid var(--gold-dark);
+            margin-bottom: 2rem;
+            box-shadow: 0 0 30px rgba(209, 174, 108, 0.2);
+            /* Removed border-radius arch to show full image */
+        }
+
+        .saint-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .saint-name {
+            font-size: 2.5rem;
+            /* Explicit increase */
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--gold-light), #fff, var(--gold-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .sub-name {
+            font-size: 1.5rem;
+            /* Increased */
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--gold-dark);
+        }
+
+        .epithet {
+            font-size: 1.2rem;
+            /* Increased */
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-style: italic;
+            color: #ccc;
+            margin-top: 1rem;
+        }
+
+        /* Grid Layout for Desktop */
+        .content-grid {
+            padding: 2rem;
+            max-width: 1400px;
+            /* Wider for 3 col layout */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        @media (max-width: 767px) {
+            .content-grid {
+                padding: 1rem 0;
+                /* Remove side padding on mobile grid to allow full width */
+                width: 100%;
+            }
+
+            .info-card,
+            .prayer-card {
+                margin: 0 1rem;
+                /* Restore padding for text cards */
+            }
+        }
+
+        .info-card-grid {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                /* Side by side hero */
+                flex-direction: row;
+                justify-content: center;
+                gap: 4rem;
+                padding: 4rem 2rem;
+                text-align: left;
+            }
+
+            .saint-image-container {
+                margin-bottom: 0;
+            }
+
+            /* 3 Columns for Attributes */
+            .info-card-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+
+            .info-item {
+                border-right: 1px solid rgba(209, 174, 108, 0.3);
+                padding-right: 2rem;
+            }
+
+            .info-item:last-child {
+                border-right: none;
+                padding-right: 0;
+            }
+        }
+
+        /* Cards */
+        section {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--gold-dark);
+            padding: 2rem;
+            border-radius: 2px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        /* Video Mobile Optimization */
+        .media-card {
+            padding: 2rem;
+            /* Ref for Desktop */
+        }
+
+        @media (max-width: 767px) {
+            .media-card {
+                padding: 0;
+                /* Zero padding on mobile */
+                border: none;
+                /* Optional: remove border if users want truly immersive? sticking to border removal for edge to edge */
+                border-top: 1px solid var(--gold-dark);
+                border-bottom: 1px solid var(--gold-dark);
+                border-left: none;
+                border-right: none;
+                background: black;
+                /* darker bg for video */
+            }
+
+            .video-container {
+                margin-top: 0;
+            }
+
+            .video-container video {
+                width: 100%;
+                max-width: none;
+                border: none;
+                display: block;
+            }
+
+            /* Hide title inside media card on mobile if they want just video? 
+               Assuming they still want the "Visiones" title. 
+               Let's keep title but maybe padded. */
+            .media-card h3 {
+                margin: 1rem;
+            }
+        }
+
+        /* Inner items */
+        .info-item {
+            margin-bottom: 2rem;
+        }
+
+        /* Remove margin on desktop grid items to let grid handle gap, but keep for mobile */
+        @media(min-width: 768px) {
+            .info-item {
+                margin-bottom: 0;
+            }
+        }
+
+        h3 {
+            border-bottom: 1px solid var(--gold-dark);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            /* Increased */
+        }
+
+        /* Prayer Styling */
+        .prayer-card {
+            text-align: center;
+        }
+
+        .latin-text {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            /* Increased */
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            color: var(--gold-dark);
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .translation {
+            font-style: italic;
+            color: #aaa;
+            font-size: 1.1rem;
+            /* Increased */
+        }
+
+        /* Video */
+.media-card {
+    text-align: center;
+    width: 100%; /* Asegura que la sección use todo el ancho */
+    overflow: hidden; /* Evita scroll horizontal accidental */
+}
+
+/* Video */
+.media-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el H3 y el contenedor del video */
+}
+
+.video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centra el video horizontalmente */
+    align-items: center;     /* Centra el video verticalmente si hubiera altura extra */
+    
+    /* Añadimos 20px de padding en TODOS los lados */
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+.vertical-video {
+    /* Mantenemos proporciones originales */
+    width: 100%;
+    max-width: 416px; 
+    height: auto;
+    
+    /* El borde decorativo */
+    border: 1px solid var(--gold-dark);
+    
+    /* Asegura que no haya desplazamientos extra */
+    display: block;
+    margin: 0 auto; 
+}
+
+/* Ajuste para que en móviles muy pequeños no se rompa el diseño */
+@media (max-width: 480px) {
+    .video-container {
+        padding: 20px; /* Mantenemos el margen de 20px que pediste */
+    }
+}
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            font-family: var(--font-heading);
+            color: var(--gold-dark);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Esto es un encabezado</h1>
-	<h1>San Iago del Mármol y el Vínculo</h1>
-    <p>Y esto es un parrafo, donde podemos escribir todo el rollo que se nos ocurra.
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="background-audio" loop>
+        <source src="media/san-iago-del-marmol-y-el-vinculo.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Entrance Overlay -->
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <h1>Santuario de Iago</h1>
+            <p>Haga clic para entrar en la Vigilia</p>
+            <button id="enter-btn">Intrare</button>
+        </div>
+    </div>
+
+    <main id="main-content" class="hidden">
+
+        <!-- Header / Hero -->
+        <header class="hero">
+            <div class="saint-image-container">
+                <img src="media/san-iago-del-marmol-y-el-vinculo.jpg" alt="San Fulgentius del Trazo y el Socorro" class="saint-image">
+            </div>
+            <div class="title-container">
+                <h1 class="saint-name">San Iago<br><span class="sub-name">del Mármol y el Vínculo</span></h1>
+                <h2 class="epithet">El Arquitecto de los Mundos Invisibles</h2>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-grid">
+
+            <!-- Attributes Section (3 Columns on Desktop) -->
+            <section class="info-card">
+                <div class="info-card-grid">
+                    <div class="info-item">
+                        <h3>Patronazgo</h3>
+                        <p>Santo patrón de los transportistas, de los que sufren heridas en el esfuerzo, de los coleccionistas de tesoros antiguos (retro-gaming) y de los buscadores de justicia (shinobis y piratas).</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>Advocación</h3>
+                        <p><strong>San Iago del Reposo del Guerrero (en referencia a su baja actual y su resiliencia).</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>Atributos Iconográficos</h3>
+                        <p>Se le representa con un brazo envuelto en una tela de lino sagrada (el cabestrillo), mientras con la mano libre sostiene una gema de mármol que brilla con luz propia. A su espalda, un círculo de poder con símbolos de clanes legendarios y una pequeña consola mística.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prayer Section -->
+            <section class="prayer-card">
+                <h3>Oración</h3>
+                <p class="latin-text">
+                    "O, Sancte Iagus, petrae lator, de Chapela ortus, in Ventosela sedens. Brachium fractum, sed mens in ludo, inter heros vivit, pro aliis se dat. In infirmitate robur, in corde lux. Amen."
+                </p>
+                <div class="divider">❦</div>
+                <p class="translation">
+                    "Oh, Santo Iago, portador de la piedra, nacido en Chapela, sentado en Ventosela. Brazo quebrado, pero mente en el juego, vive entre héroes, por otros se entrega. En la debilidad fortaleza, en el corazón luz. Amén."
+                </p>
+            </section>
+
+            <!-- Video Section -->
+            <section class="media-card">
+                <h3>Visiones</h3>
+<video class="vertical-video" autoplay loop muted playsinline controls>
+    <source src="media/san-iago-del-marmol-y-el-vinculo.mp4" type="video/mp4">
+    Tu navegador no soporta videos.
+</video>
+                </div>
+            </section>
+
+        </div>
+
+        <footer>
+            <p>San Iago • Ora Pro Nobis</p>
+        </footer>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const enterBtn = document.getElementById('enter-btn');
+            const overlay = document.getElementById('overlay');
+            const mainContent = document.getElementById('main-content');
+            const audio = document.getElementById('background-audio');
+
+            enterBtn.addEventListener('click', () => {
+                // Start audio
+                audio.volume = 0.5;
+                audio.play().catch(e => console.log("Audio play failed, user interaction needed", e));
+
+                // Fade out overlay
+                overlay.classList.add('fade-out');
+
+                // Show main content
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    mainContent.classList.add('fade-in');
+                }, 1000); // Wait for fade out transition
+            });
+        });
+    </script>
 </body>
+
 </html>
