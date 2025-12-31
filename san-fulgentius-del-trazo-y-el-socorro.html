@@ -349,22 +349,51 @@
         }
 
         /* Video */
-        .media-card {
-            text-align: center;
-        }
+.media-card {
+    text-align: center;
+    width: 100%; /* Asegura que la sección use todo el ancho */
+    overflow: hidden; /* Evita scroll horizontal accidental */
+}
 
-        .video-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem;
-        }
+/* Video */
+.media-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el H3 y el contenedor del video */
+}
 
-        .vertical-video {
-            max-width: 100%;
-            max-height: 500px;
-            border: 1px solid var(--gold-dark);
-        }
+.video-container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centra el video horizontalmente */
+    align-items: center;     /* Centra el video verticalmente si hubiera altura extra */
+    
+    /* Añadimos 20px de padding en TODOS los lados */
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+.vertical-video {
+    /* Mantenemos proporciones originales */
+    width: 100%;
+    max-width: 416px; 
+    height: auto;
+    
+    /* El borde decorativo */
+    border: 1px solid var(--gold-dark);
+    
+    /* Asegura que no haya desplazamientos extra */
+    display: block;
+    margin: 0 auto; 
+}
+
+/* Ajuste para que en móviles muy pequeños no se rompa el diseño */
+@media (max-width: 480px) {
+    .video-container {
+        padding: 20px; /* Mantenemos el margen de 20px que pediste */
+    }
+}
 
         footer {
             text-align: center;
@@ -387,8 +416,8 @@
     <!-- Entrance Overlay -->
     <div id="overlay" class="overlay">
         <div class="overlay-content">
-            <h1>Sanctuary of Henricus</h1>
-            <p>Click to Enter the Vigil</p>
+            <h1>Santuario de Fulgencio</h1>
+            <p>Haga clic para entrar en la Vigilia</p>
             <button id="enter-btn">Intrare</button>
         </div>
     </div>
@@ -433,33 +462,21 @@
             <section class="prayer-card">
                 <h3>Oración</h3>
                 <p class="latin-text">
-                    "O, Sancte Henricus, viator magne, de Coia natus, in Teis quiescit. Inter canes fidelis, inter bella
-                    prudens, celtae spiritu, cor caeleste tenes. Iter nostrum custodi, in pace et in ludo. Amen."
+                    "O, Sancte Fulgentius, artifex novus, de Mula ad Chipionam, sub umbra noctis. Crucis rubeae miles, creaturae amicus, inter picturas volat, chordis sonantibus. In imagine veritas, in auxilio salus. Amen."
                 </p>
                 <div class="divider">❦</div>
                 <p class="translation">
-                    "O, Sancte Fulgentius, artifex novus, de Mula ad Chipionam, sub umbra noctis. Crucis rubeae miles, creaturae amicus, inter picturas volat, chordis sonantibus. In imagine veritas, in auxilio salus. Amen."
+                    "Oh, Santo Fulgencio, nuevo artista, de Mula a Chipiona, bajo la sombra de la noche. Soldado de la Cruz Roja, amigo de las criaturas, vuela entre imágenes, con cuerdas (de música) sonando. En la imagen la verdad, en el auxilio la salvación. Amén."
                 </p>
             </section>
 
             <!-- Video Section -->
             <section class="media-card">
                 <h3>Visiones</h3>
-                <div class="video-container">
-                    <!-- Added muted, autoplay, loop, playsinline for better autoplay support -->
-                    <!-- Note: Autoplay often requires muted to be true unless user interacted with domain, 
-                         but since we have an interaction overlay, we might get away with unmuted, 
-                         however user requested autoplay loop which is standard muted bg video style usually. 
-                         I will unset muted but if it fails browser policy it won't play. 
-                         Actually, standard practice for 'autoplay' video is muted. 
-                         But since user clicks 'Intrare', we can try unmuted. 
-                         However, let's stick to muted for safety or let the user decide. 
-                         I'll set it to muted because user asked for "Autoplay and Loop" which usually implies background visual. 
-                    -->
-                    <video class="vertical-video" autoplay loop muted playsinline controls>
-                        <source src="media/san-fulgentius-del-trazo-y-el-socorro.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+<video class="vertical-video" autoplay loop muted playsinline controls>
+    <source src="media/san-fulgentius-del-trazo-y-el-socorro.mp4" type="video/mp4">
+    Tu navegador no soporta videos.
+</video>
                 </div>
             </section>
 
